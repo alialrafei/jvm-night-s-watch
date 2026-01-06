@@ -1,7 +1,4 @@
-Below is a **clean, technical, production-grade README** you can put directly into your repository.
-It explains **exactly what you built, why, and how**, using correct JVM terminology and matching your current implementation phase.
 
----
 
 # JVM Night's Watcher – Initial Phase Documentation
 
