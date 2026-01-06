@@ -3,11 +3,11 @@ It explains **exactly what you built, why, and how**, using correct JVM terminol
 
 ---
 
-# JVM Kaanubis Watcher – Initial Phase Documentation
+# JVM Night's Watcher – Initial Phase Documentation
 
 ## Overview
 
-**JVM Kaanubis Watcher** is a **lightweight, native Java JVM monitoring tool** designed to observe **multiple running JVM processes** from a single host.
+**JVM Night's Watcher** is a **lightweight, native Java JVM monitoring tool** designed to observe **multiple running JVM processes** from a single host.
 It is intentionally built **without Spring Boot or heavy frameworks** to remain:
 
 * Low memory footprint

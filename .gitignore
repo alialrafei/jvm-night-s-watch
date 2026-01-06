@@ -1,2 +1,16 @@
-*.
-target/*
+# Java
+*.class
+*.log
+*.pid
+
+# Maven / Gradle
+target/
+build/
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
