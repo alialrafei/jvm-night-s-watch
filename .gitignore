@@ -14,3 +14,10 @@ build/
 
 # OS
 .DS_Store
+
+jvm-frontend/.env
+
+
+jvm-frontend/node_modules
+
+jvm-frontend/.vite
