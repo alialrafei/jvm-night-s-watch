@@ -254,18 +254,35 @@ The tool is designed to be **always-on**, **low risk**, and **easy to ship**.
 
 ## Current Status
 
+### Backend (Core)
 ✔ JVM discovery
 ✔ Attach & JMX bootstrap
 ✔ Multithreaded collectors
 ✔ Snapshot data model
 ✔ Correct JVM lifecycle handling
 
-🚧 **In progress:**
+### Frontend (UI)
+✔ **Modern Web Interface**: Built with React, Vite, and Electron.
+✔ **Dark Mode Support**: Context-aware styling with persistent preferences.
+✔ **Dashboards**:
+  * **Memory**: Heap/Non-Heap visualization, Memory Pools breakdown.
+  * **Threads**: State monitoring, Deadlock detection, Stack Traces.
+  * **Garbage Collection**: G1/ZGC stats, pause times.
+  * **Class Histogram**: Top memory-consuming classes.
+✔ **Pod/Process Discovery**: Auto-detection of local JVMs.
 
-* Embedded HTTP interface
-* Web UI integration
-* PID selection and navigation
-* Visualization of collected metrics
+## Gallery
+
+### Dark Mode
+![Loading Screen](jvm-frontend/docs/assets/dark_mode_loading.png)
+*Dark theme loading screen*
+
+### Light Mode
+![Dashboard Overview](jvm-frontend/docs/assets/light_mode_dashboard.png)
+*Memory Dashboard in Light Mode*
+
+![Pod Selection](jvm-frontend/docs/assets/light_mode_empty.png)
+*Pod Selection and Details*
 
 ---
 
