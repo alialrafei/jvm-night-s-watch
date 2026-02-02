@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState , useContext ,createContext } from 'react';
 import PodList from "../components/PodList";
 import { JvmMonitorReport } from "../constants/requestBody";
 import { Button, Card, Navbar, Alignment,Spinner,EntityTitle ,BlueprintProvider, H1 } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
+
+export const PodDataContext = createContext<Record<string, JvmMonitorReport>>({});
 
 export default function App() {
     // Store reports in a Record (Dictionary) using pod name as the key
@@ -49,6 +51,7 @@ export default function App() {
 
     return (
         <BlueprintProvider>
+            
             <Navbar className="bp3-dark">
                 <Navbar.Group align={Alignment.START}>
                     <Navbar.Heading>JVM Night's Watch</Navbar.Heading>
@@ -56,18 +59,24 @@ export default function App() {
                     <Button className="bp3-minimal" icon="home" text="Home" />
                 </Navbar.Group>
             </Navbar>
-            <MainContent podNames={Object.values(reports)} />
+
+            <PodDataContext.Provider value={reports}>
+
+            <MainContent />
+
+            </PodDataContext.Provider>  
+            
         </BlueprintProvider>
     );
 }
 
 
-function MainContent({ podNames }: { podNames: JvmMonitorReport[] }) {
+function MainContent() {
+    
     return (
         <div className="flex flex-row h-screen bg-gray-100">
             {/* Sidebar with all discovered pods */}
-            <PodList pods={podNames} />
-
+            <PodList />
         </div>
     );
 }
