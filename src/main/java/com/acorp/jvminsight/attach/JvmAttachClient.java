@@ -21,11 +21,9 @@ public final class JvmAttachClient {
             String connectorAddress =
                     props.getProperty("com.sun.management.jmxremote.localConnectorAddress");
     
-            if (connectorAddress == null) {
-                String javaHome = vm.getSystemProperties().getProperty("java.home");
-                String agent = javaHome + "/lib/management-agent.jar";
-                vm.loadAgent(agent);
-    
+             if (connectorAddress == null) {
+                vm.startLocalManagementAgent();
+
                 props = vm.getAgentProperties();
                 connectorAddress =
                     props.getProperty("com.sun.management.jmxremote.localConnectorAddress");

@@ -1,10 +1,10 @@
 package com.acorp.jvminsight.memory;
 
-import java.time.Instant;
+
 
 public class MemorySnapshot {
 
-    public final Instant timestamp;
+    public final long timestamp;
 
     public final long heapUsed;
     public final long heapCommitted;
@@ -13,7 +13,7 @@ public class MemorySnapshot {
     public final long nonHeapUsed;
     public final long nonHeapCommitted;
 
-    public Instant getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
@@ -38,7 +38,7 @@ public class MemorySnapshot {
     }
 
     public MemorySnapshot(long heapUsed, long heapCommitted, long heapMax, long nonHeapUsed, long nonHeapCommitted) {
-        this.timestamp = Instant.now();
+        this.timestamp = System.currentTimeMillis();
         this.heapUsed = heapUsed;
         this.heapCommitted = heapCommitted;
         this.heapMax = heapMax;

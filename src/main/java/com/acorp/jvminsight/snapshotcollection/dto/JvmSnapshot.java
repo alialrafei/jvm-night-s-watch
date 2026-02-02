@@ -1,12 +1,12 @@
 package com.acorp.jvminsight.snapshotcollection.dto;
 
 import java.lang.management.ThreadInfo;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import com.acorp.jvminsight.memory.GcSnapshot;
 import com.acorp.jvminsight.memory.MemoryPoolSnapshot;
 import com.acorp.jvminsight.memory.MemorySnapshot;
+import com.acorp.jvminsight.memory.histogram.ClassHistogramEntry;
 
 public class JvmSnapshot {
     public  long pid;
@@ -14,8 +14,8 @@ public class JvmSnapshot {
     public  MemorySnapshot memory;
     public  List<GcSnapshot> gc;
     public  List<MemoryPoolSnapshot> pools;
-    public  String histogram;
-    public  LocalDateTime timestamp;
+    public  List<ClassHistogramEntry> histogram;
+    public  long timestamp;
     public  String dump ;
    
     public long[] deadlocks;
@@ -37,10 +37,10 @@ public class JvmSnapshot {
     public List<MemoryPoolSnapshot> getPools() {
         return pools;
     }
-    public String getHistogram() {
+    public List<ClassHistogramEntry> getHistogram() {
         return histogram;
     }
-    public LocalDateTime getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
     public void setPid(long pid) {
@@ -58,10 +58,10 @@ public class JvmSnapshot {
     public void setPools(List<MemoryPoolSnapshot> pools) {
         this.pools = pools;
     }
-    public void setHistogram(String histogram) {
+    public void setHistogram(List<ClassHistogramEntry> histogram) {
         this.histogram = histogram;
     }
-    public void setTimestamp(LocalDateTime timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
     public void setDump(String dump) {
