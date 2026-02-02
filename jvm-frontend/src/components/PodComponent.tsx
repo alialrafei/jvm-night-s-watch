@@ -1,8 +1,8 @@
 import React from "react";
 import { Card } from "@blueprintjs/core";
 interface PodComponentProps {
-    pod: string;
-    onClick: () => void
+  pod: string;
+  onClick: () => void
 }
 
 
@@ -16,7 +16,7 @@ const PodComponent = (props: PodComponentProps) => {
       style={{ borderLeft: `6px solid ${randomColor}` }}
       onClick={props.onClick}
     >
-      <h3 className="text-lg font-medium">{props.pod}</h3>
+      <h3 className="text-lg font-medium dark:text-gray-100">{props.pod}</h3>
     </Card>
   );
 };

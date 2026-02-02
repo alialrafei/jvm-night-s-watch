@@ -1,28 +1,39 @@
-import React, { useEffect, useState , useContext ,createContext } from 'react';
+import React, { useEffect, useState, createContext } from 'react';
 import PodList from "../components/PodList";
 import { JvmMonitorReport } from "../constants/requestBody";
-import { Button, Card, Navbar, Alignment,Spinner,EntityTitle ,BlueprintProvider, H1   } from "@blueprintjs/core";
-import { IconNames } from "@blueprintjs/icons";
+import { Button, Navbar, Alignment, Spinner, EntityTitle, BlueprintProvider, H1 } from "@blueprintjs/core";
 import PodMain from "./PodMain";
+import { ThemeProvider, useTheme } from "../contexts/ThemeContext";
 
-
- interface PodDataContextType {
-    reports :   Record<string, JvmMonitorReport>;
+interface PodDataContextType {
+    reports: Record<string, JvmMonitorReport>;
     selectedPodData: Record<string, JvmMonitorReport>;
-    setSelectedPodData: React.Dispatch<React.SetStateAction<Record<string, JvmMonitorReport>>>;    
+    setSelectedPodData: React.Dispatch<React.SetStateAction<Record<string, JvmMonitorReport>>>;
 }
 
 export const PodDataContext = createContext<PodDataContextType>({
     reports: {},
     selectedPodData: {},
-    setSelectedPodData: () => {}
+    setSelectedPodData: () => { }
 });
+
+function ThemeToggle() {
+    const { isDarkMode, toggleTheme } = useTheme();
+    return (
+        <Button
+            minimal
+            icon={isDarkMode ? "flash" : "moon"}
+            onClick={toggleTheme}
+            title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+        />
+    );
+}
 
 export default function App() {
     // Store reports in a Record (Dictionary) using pod name as the key
     const [reports, setReports] = useState<Record<string, JvmMonitorReport>>({});
-    const [selectedPodData, setSelectedPodData] = useState<Record<string, JvmMonitorReport>>({});   
-    
+    const [selectedPodData, setSelectedPodData] = useState<Record<string, JvmMonitorReport>>({});
+
     useEffect(() => {
         console.log("React: Component mounted, attaching listener...");
 
@@ -39,61 +50,70 @@ export default function App() {
         } else {
             console.error("React: window.electronAPI is missing or malformed");
         }
-        }, []);
+    }, []);
 
     const podNames = Object.keys(reports);
 
     if (podNames.length === 0) {
         return (
-            <BlueprintProvider>
-            <div className="flex flex-col items-center justify-items-start h-screen bg-gray-100">
-            {Array.from({ length: 5 }).map((_, i) => (
-                <EntityTitle ellipsize={true}
-                            fill={true}    
-                            icon={undefined}
-                            loading={true}
-                            heading={H1}
-                            title="JVM Night's Watch" subtitle="No Pods Discovered Yet" />
-            ))}
-             <p className="text-gray-600 text-lg">Waiting for JVM Pods...</p>
-             <Spinner size={25} className="mb-4" />            
-            </div>
-            </BlueprintProvider>
+            <ThemeProvider>
+                <BlueprintProvider>
+                    <div className="flex flex-col items-center justify-items-start h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
+                        <div className="absolute top-4 right-4">
+                            <ThemeToggle />
+                        </div>
+                        {Array.from({ length: 5 }).map((_, i) => (
+                            <EntityTitle
+                                key={i}
+                                ellipsize={true}
+                                fill={true}
+                                icon={undefined}
+                                loading={true}
+                                heading={H1}
+                                title="JVM Night's Watch" subtitle="No Pods Discovered Yet" />
+                        ))}
+                        <p className="text-gray-600 dark:text-gray-400 text-lg">Waiting for JVM Pods...</p>
+                        <Spinner size={25} className="mb-4" />
+                    </div>
+                </BlueprintProvider>
+            </ThemeProvider>
         );
     }
 
     return (
-        <BlueprintProvider>
-            
-            <Navbar className="bp3-dark">
-                <Navbar.Group align={Alignment.START}>
-                    <Navbar.Heading>JVM Night's Watch</Navbar.Heading>
-                    <Navbar.Divider />
-                    <Button className="bp3-minimal" icon="home" text="Home" />
-                </Navbar.Group>
-            </Navbar>
+        <ThemeProvider>
+            <BlueprintProvider>
 
-            <PodDataContext.Provider value={{ reports, selectedPodData, setSelectedPodData }}>
+                <Navbar>
+                    <Navbar.Group align={Alignment.START}>
+                        <Navbar.Heading>JVM Night's Watch</Navbar.Heading>
+                        <Navbar.Divider />
+                        <Button minimal icon="home" text="Home" />
+                    </Navbar.Group>
+                    <Navbar.Group align={Alignment.END}>
+                        <ThemeToggle />
+                    </Navbar.Group>
+                </Navbar>
 
-            <MainContent />
+                <PodDataContext.Provider value={{ reports, selectedPodData, setSelectedPodData }}>
+                    <MainContent />
+                </PodDataContext.Provider>
 
-            </PodDataContext.Provider>  
-            
-        </BlueprintProvider>
+            </BlueprintProvider>
+        </ThemeProvider>
     );
 }
 
 
 function MainContent() {
-    
     return (
-       <div className="flex flex-row h-screen" style={{ height: '100%' }}>
+        <div className="flex flex-row h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-200" style={{ height: '100%' }}>
             {/* Sidebar with all discovered pods */}
-            <div className="w-64 flex-shrink-0 overflow-y-auto bg-white border-r border-gray-300">
+            <div className="w-64 flex-shrink-0 overflow-y-auto bg-white dark:bg-gray-800 border-r border-gray-300 dark:border-gray-700 transition-colors duration-200">
                 <PodList />
             </div>
             {/* Main content area for selected pod details */}
-            <div className="flex-1 overflow-hidden bg-gray-100">
+            <div className="flex-1 overflow-hidden bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
                 <PodMain />
             </div>
         </div>
