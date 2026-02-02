@@ -1,35 +1,42 @@
-import React, { useEffect, useState ,useContext } from 'react';
-import { JvmMonitorReport } from "../constants/requestBody";
-import { Button,CardList, Card, Navbar, Alignment,Spinner,EntityTitle ,BlueprintProvider, H1 } from "@blueprintjs/core";
-import { IconNames } from "@blueprintjs/icons";
+// In PodMain.tsx
+import React, { useContext } from 'react';
+import { Section, SectionCard, CardList, Card } from "@blueprintjs/core";
 import { PodDataContext } from "./App";
 
-
-
-
-const PodMain = (props: { selectedId: string }) => {
-    // Store reports in a Record (Dictionary) using pod name as the key
-    const podData = useContext(PodDataContext);
+const PodMain = () => {
+    const { reports, selectedPodData } = useContext(PodDataContext);
     
-    const [selectedPodData, setSelectedPodData] = useState<Record<string, JvmMonitorReport>>({});   
-    
-    useEffect(() => {
-        if (props.selectedId && podData[props.selectedId]) {
-            setSelectedPodData({ [props.selectedId]: podData[props.selectedId] });
-        }
-    }, [props.selectedId, podData]);
+    console.log("PodMain render - selectedPodData:", selectedPodData);
+    console.log("PodMain render - reports:", reports);
 
-    return(
-       <CardList>
-            <Card>Memory</Card>
-            <Card>ThreadsInfo</Card>
-            <Card>GC</Card>
-            <Card>Memory Pools</Card>
-            <Card>Histograms</Card>
-            <Card>Deadlocks</Card>
-            <Card>Dump</Card>
-        </CardList> 
-       );
+    if (!selectedPodData || Object.keys(selectedPodData).length === 0) {
+        return (
+            <Section title="Pod Details" className="flex-1 p-4 overflow-y-auto">
+                <SectionCard padded={true} className="bg-white border border-gray-300">
+                    <Card>No pod selected</Card>
+                </SectionCard>
+            </Section>
+        );
+    }
+
+    const podData = Object.values(selectedPodData)[0];
+    console.log("Rendering pod data:", podData);
+
+    return (
+        <Section title={`Details for Pod: ${podData.pod.name}`} className="flex-1 p-4 overflow-y-auto">
+            <SectionCard padded={true} className="bg-white border border-gray-300">
+                <CardList>
+                    <Card>Memory: {podData.jvmSnapshots[0]?.memory?.heapUsed}</Card>
+                    <Card>ThreadsInfo</Card>
+                    <Card>GC</Card>
+                    <Card>Memory Pools</Card>
+                    <Card>Histograms</Card>
+                    <Card>Deadlocks</Card>
+                    <Card>Dump</Card>
+                </CardList> 
+            </SectionCard>
+        </Section>
+    );
 }
 
 export default PodMain;

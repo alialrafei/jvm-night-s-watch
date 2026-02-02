@@ -1,15 +1,28 @@
 import React, { useEffect, useState , useContext ,createContext } from 'react';
 import PodList from "../components/PodList";
 import { JvmMonitorReport } from "../constants/requestBody";
-import { Button, Card, Navbar, Alignment,Spinner,EntityTitle ,BlueprintProvider, H1 } from "@blueprintjs/core";
+import { Button, Card, Navbar, Alignment,Spinner,EntityTitle ,BlueprintProvider, H1   } from "@blueprintjs/core";
 import { IconNames } from "@blueprintjs/icons";
+import PodMain from "./PodMain";
 
-export const PodDataContext = createContext<Record<string, JvmMonitorReport>>({});
+
+ interface PodDataContextType {
+    reports :   Record<string, JvmMonitorReport>;
+    selectedPodData: Record<string, JvmMonitorReport>;
+    setSelectedPodData: React.Dispatch<React.SetStateAction<Record<string, JvmMonitorReport>>>;    
+}
+
+export const PodDataContext = createContext<PodDataContextType>({
+    reports: {},
+    selectedPodData: {},
+    setSelectedPodData: () => {}
+});
 
 export default function App() {
     // Store reports in a Record (Dictionary) using pod name as the key
     const [reports, setReports] = useState<Record<string, JvmMonitorReport>>({});
-
+    const [selectedPodData, setSelectedPodData] = useState<Record<string, JvmMonitorReport>>({});   
+    
     useEffect(() => {
         console.log("React: Component mounted, attaching listener...");
 
@@ -60,7 +73,7 @@ export default function App() {
                 </Navbar.Group>
             </Navbar>
 
-            <PodDataContext.Provider value={reports}>
+            <PodDataContext.Provider value={{ reports, selectedPodData, setSelectedPodData }}>
 
             <MainContent />
 
@@ -74,9 +87,15 @@ export default function App() {
 function MainContent() {
     
     return (
-        <div className="flex flex-row h-screen bg-gray-100">
+       <div className="flex flex-row h-screen" style={{ height: '100%' }}>
             {/* Sidebar with all discovered pods */}
-            <PodList />
+            <div className="w-64 flex-shrink-0 overflow-y-auto bg-white border-r border-gray-300">
+                <PodList />
+            </div>
+            {/* Main content area for selected pod details */}
+            <div className="flex-1 overflow-hidden bg-gray-100">
+                <PodMain />
+            </div>
         </div>
     );
 }
