@@ -12,7 +12,7 @@
 ![OpenShift](https://img.shields.io/badge/OpenShift-ready-EE0000?logo=redhatopenshift&logoColor=white)
 ## Overview
 
-**JVM A-Haytham is a **lightweight, JVM monitoring tool** designed to observe **multiple running JVM processes** from a single host.
+JVM A-Haytham is a **lightweight, JVM monitoring tool** designed to observe **multiple running JVM processes** from a single host.
 ![Design](jvm-frontend/docs/assets/jvm-nightwatch-overview.png)
 It is intentionally built **without Spring Boot or heavy frameworks** to remain:
 
