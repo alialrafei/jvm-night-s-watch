@@ -290,9 +290,9 @@ The tool is designed to be **always-on**, **low risk**, and **easy to ship**.
 
 * UI dashboard (Threads, Heap, GC, Objects)
 * Live updates (polling → SSE)
-* PID lifecycle handling (JVM start/exit)
-* Snapshot diffing
-* Alerts (deadlocks, memory pressure)
+* PID lifecycle handling (JVM start/exit) 
+* Snapshot diffing (done)
+* Alerts (deadlocks, memory pressure) (done)
 
 ---
 
