@@ -13,6 +13,7 @@
 ## Overview
 
 **JVM Night's Watcher** is a **lightweight, JVM monitoring tool** designed to observe **multiple running JVM processes** from a single host.
+![Design](jvm-frontend/docs/assets/jvm-nightwatch-overview.png)
 It is intentionally built **without Spring Boot or heavy frameworks** to remain:
 
 * Low memory footprint
